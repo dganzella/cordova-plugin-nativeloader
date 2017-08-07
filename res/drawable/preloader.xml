@@ -1,15 +1,15 @@
 <animation-list xmlns:android="http://schemas.android.com/apk/res/android"
     android:oneshot="false">
-    <item android:drawable="@drawable/preloader1" android:duration="50" />
-    <item android:drawable="@drawable/preloader2" android:duration="50" />
-    <item android:drawable="@drawable/preloader3" android:duration="50" />
-	<item android:drawable="@drawable/preloader4" android:duration="50" />
-	<item android:drawable="@drawable/preloader5" android:duration="50" />
-	<item android:drawable="@drawable/preloader6" android:duration="50" />
-	<item android:drawable="@drawable/preloader7" android:duration="50" />
-	<item android:drawable="@drawable/preloader8" android:duration="50" />
-	<item android:drawable="@drawable/preloader9" android:duration="50" />
-	<item android:drawable="@drawable/preloader10" android:duration="50" />
-	<item android:drawable="@drawable/preloader11" android:duration="50" />
-	<item android:drawable="@drawable/preloader12" android:duration="50" />
+    <item android:drawable="@drawable/preloader1" android:duration="100" />
+    <item android:drawable="@drawable/preloader2" android:duration="100" />
+    <item android:drawable="@drawable/preloader3" android:duration="100" />
+	<item android:drawable="@drawable/preloader4" android:duration="100" />
+	<item android:drawable="@drawable/preloader5" android:duration="100" />
+	<item android:drawable="@drawable/preloader6" android:duration="100" />
+	<item android:drawable="@drawable/preloader7" android:duration="100" />
+	<item android:drawable="@drawable/preloader8" android:duration="100" />
+	<item android:drawable="@drawable/preloader9" android:duration="100" />
+	<item android:drawable="@drawable/preloader10" android:duration="100" />
+	<item android:drawable="@drawable/preloader11" android:duration="100" />
+	<item android:drawable="@drawable/preloader12" android:duration="100" />
 </animation-list>
