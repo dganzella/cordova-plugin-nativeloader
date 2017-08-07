@@ -23,13 +23,18 @@ import android.content.SharedPreferences.Editor;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.FrameLayout;
+import android.graphics.drawable.AnimationDrawable;
 
 public class NativeLoaderPlugin extends CordovaPlugin
 {
   
-  public ImageView* loaderView;
+  public ImageView loaderView;
   public boolean isViewShown;
+  public AnimationDrawable spinnerAnimation;
   public static final String TAG = "NativeLoader";
   
   static CordovaInterface _cordova;
@@ -38,17 +43,24 @@ public class NativeLoaderPlugin extends CordovaPlugin
   @Override
   public void initialize(CordovaInterface cordova, CordovaWebView webView)
   {
+	Log.i( TAG, "initialize Native Loader" );
+
 	super.initialize(cordova, webView);
 		
 	_cordova = cordova;
 	_webView = webView;
 	  
 	isViewShown = false;
-	loaderView = new ImageView(this);
-	loaderView.setBackgroundColor(0xFF000000);
+
+	loaderView = new ImageView(cordova.getActivity().getApplicationContext());
+	loaderView.setBackgroundColor(0xFFFF0000);
+
+	FrameLayout layout = (FrameLayout) _webView.getView().getParent();
+	loaderView.setLayoutParams(layout.getLayoutParams());
+
+	loaderView.setBackgroundResource(R.drawable.preloader);
+  	spinnerAnimation = (AnimationDrawable) loaderView.getBackground();
 	
-	LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT);
-	loaderView.setLayoutParams(lp);
   }
 	
   @Override
@@ -58,22 +70,35 @@ public class NativeLoaderPlugin extends CordovaPlugin
 
       if(action.equals("showView"))
       {
-		boolean show = args.getString(1).equals("true");
-		 
-		if(show ^ isViewShown)
+		boolean show = args.getString(0).equals("true");
+
+		if(show ^ this.isViewShown)
 		{
-			ViewGroup frame = (ViewGroup) cordova.getActivity().findViewById(android.R.id.content);
-			
 			if(show)
 			{
-				frame.addView(loaderView);  
+				this.cordova.getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						FrameLayout layout = (FrameLayout) _webView.getView().getParent();
+						layout.addView(loaderView);
+						loaderView.bringToFront();
+						spinnerAnimation.start();
+					}
+				}); 
 			}
 			else
 			{
-				frame.removeView(loaderView);  
+				this.cordova.getActivity().runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						FrameLayout layout = (FrameLayout) _webView.getView().getParent();
+						layout.removeView(loaderView);
+						spinnerAnimation.stop();
+					}
+				}); 
 			}
 			
-			loaderView = show;   
+			this.isViewShown = show;
 		}
 		
 		callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.OK));
