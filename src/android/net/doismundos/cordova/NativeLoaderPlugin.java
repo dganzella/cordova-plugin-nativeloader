@@ -28,6 +28,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.FrameLayout;
 import android.graphics.drawable.AnimationDrawable;
+import android.view.ViewGroup.LayoutParams;
+import android.view.Gravity;
 
 public class NativeLoaderPlugin extends CordovaPlugin
 {
@@ -53,16 +55,22 @@ public class NativeLoaderPlugin extends CordovaPlugin
 	isViewShown = false;
 
 	loaderView = new ImageView(cordova.getActivity().getApplicationContext());
-	loaderView.setBackgroundColor(0xFFFF0000);
+	loaderView.setBackgroundColor(0x00FFFFFF);
 
-	FrameLayout layout = (FrameLayout) _webView.getView().getParent();
-	loaderView.setLayoutParams(layout.getLayoutParams());
+	FrameLayout.LayoutParams lp = new FrameLayout.LayoutParams( FrameLayout.LayoutParams.WRAP_CONTENT, FrameLayout.LayoutParams.WRAP_CONTENT );
+ 	lp.gravity = Gravity.CENTER;
 
-	loaderView.setBackgroundResource(R.drawable.preloader);
+	loaderView.setLayoutParams(lp);
+
+	loaderView.setBackgroundResource(getAppResource("preloader","drawable"));
   	spinnerAnimation = (AnimationDrawable) loaderView.getBackground();
 	
   }
-	
+
+  private int getAppResource(String name, String type) {
+    return cordova.getActivity().getResources().getIdentifier(name, type, cordova.getActivity().getPackageName());
+  }
+
   @Override
   public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException
   {
