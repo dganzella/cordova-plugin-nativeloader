@@ -31,10 +31,19 @@ import android.graphics.drawable.AnimationDrawable;
 import android.view.ViewGroup.LayoutParams;
 import android.view.Gravity;
 
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.ScaleAnimation;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.TranslateAnimation;
+import android.view.animation.Interpolator;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.BounceInterpolator;
+
 public class NativeLoaderPlugin extends CordovaPlugin
 {
   
-  public ImageView loaderView;
+  public ImageView loaderView, bgView;
   public AnimationDrawable spinnerAnimation;
   public static final String TAG = "NativeLoader";
   
@@ -53,8 +62,9 @@ public class NativeLoaderPlugin extends CordovaPlugin
 	
 	FrameLayout layout = (FrameLayout) _webView.getView().getParent();
 
-	loaderView = layout.findViewWithTag("nativeLoaderView");
-	
+	loaderView = (ImageView)layout.findViewWithTag("nativeLoaderView");
+	bgView = (ImageView)layout.findViewWithTag("bgView");
+
 	if(loaderView == null)
 	{
 		loaderView = new ImageView(cordova.getActivity().getApplicationContext());
@@ -65,6 +75,11 @@ public class NativeLoaderPlugin extends CordovaPlugin
 		lp.gravity = Gravity.CENTER;
 		loaderView.setLayoutParams(lp);
 		loaderView.setBackgroundResource(getAppResource("preloader","drawable"));	
+
+		bgView = new ImageView(cordova.getActivity().getApplicationContext());
+		bgView.setTag("bgView");
+		bgView.setBackgroundColor(0xFFFFFFFF);
+		bgView.setLayoutParams(layout.getLayoutParams());
 	}
 
   	spinnerAnimation = (AnimationDrawable) loaderView.getBackground();
@@ -89,9 +104,24 @@ public class NativeLoaderPlugin extends CordovaPlugin
 				@Override
 				public void run() {
 					FrameLayout layout = (FrameLayout) _webView.getView().getParent();
+					layout.addView(bgView);
 					layout.addView(loaderView);
 					loaderView.bringToFront();
 					spinnerAnimation.start();
+
+					Animation scaleIn = new ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, .5f, Animation.RELATIVE_TO_SELF, .5f);
+					
+					Animation fadeIn = new AlphaAnimation(0, 1);
+
+					AnimationSet animation = new AnimationSet(true);
+
+					animation.addAnimation(scaleIn);
+					animation.addAnimation(fadeIn);
+					animation.setDuration(600);
+
+					animation.setInterpolator(new BounceInterpolator());
+
+					loaderView.startAnimation(animation);	
 				}
 			}); 
 		}
@@ -100,9 +130,46 @@ public class NativeLoaderPlugin extends CordovaPlugin
 			this.cordova.getActivity().runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					FrameLayout layout = (FrameLayout) _webView.getView().getParent();
-					layout.removeView(loaderView);
-					spinnerAnimation.stop();
+
+					Animation scaleOut = new ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, .5f, Animation.RELATIVE_TO_SELF, .5f);
+					
+					Animation fadeOut = new AlphaAnimation(1, 0);
+
+					AnimationSet animation = new AnimationSet(true);
+
+					animation.addAnimation(scaleOut);
+					animation.addAnimation(fadeOut);
+					animation.setDuration(600);
+
+					animation.setInterpolator(new BounceInterpolator());
+					loaderView.startAnimation(animation);
+
+					new android.os.Handler().postDelayed(
+					new Runnable() {
+						public void run() {
+							FrameLayout layout = (FrameLayout) _webView.getView().getParent();
+							layout.removeView(loaderView);
+							spinnerAnimation.stop();
+						}
+						}, 
+					600);
+
+					AnimationSet animationbg = new AnimationSet(true);
+					Animation fadeOutDelayed = new AlphaAnimation(1, 0);
+					fadeOutDelayed.setStartOffset(600);
+					animationbg.addAnimation(fadeOutDelayed);
+					animationbg.setDuration(1200);
+
+					bgView.startAnimation(animationbg);
+
+					new android.os.Handler().postDelayed(
+					new Runnable() {
+						public void run() {
+							FrameLayout layout = (FrameLayout) _webView.getView().getParent();
+							layout.removeView(bgView);
+						}
+						}, 
+					1200);
 				}
 			}); 
 		}
