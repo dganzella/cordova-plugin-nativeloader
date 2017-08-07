@@ -19,6 +19,20 @@
         </feature>
       </config-file>
       
+	  <resource-file src="res/drawable/preloader.xml" target="res/drawable/preloader.xml" />
+	  
+	  <resource-file src="res/drawable/preloader1.png" target="res/drawable/preloader1.png" />
+	  <resource-file src="res/drawable/preloader2.png" target="res/drawable/preloader2.png" />
+	  <resource-file src="res/drawable/preloader3.png" target="res/drawable/preloader3.png" />
+	  <resource-file src="res/drawable/preloader4.png" target="res/drawable/preloader4.png" />
+	  <resource-file src="res/drawable/preloader5.png" target="res/drawable/preloader5.png" />
+	  <resource-file src="res/drawable/preloader6.png" target="res/drawable/preloader6.png" />
+	  <resource-file src="res/drawable/preloader7.png" target="res/drawable/preloader7.png" />
+	  <resource-file src="res/drawable/preloader8.png" target="res/drawable/preloader8.png" />
+	  <resource-file src="res/drawable/preloader9.png" target="res/drawable/preloader9.png" />
+	  <resource-file src="res/drawable/preloader10.png" target="res/drawable/preloader10.png" />
+	  <resource-file src="res/drawable/preloader11.png" target="res/drawable/preloader11.png" />
+	  <resource-file src="res/drawable/preloader12.png" target="res/drawable/preloader12.png" />
     </platform>
 
     <platform name="ios">
