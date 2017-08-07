@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="net.doismundos.cordova.nativeloader"
+    version="1.0.0">
+
+    <name>NativeLoaderPlugin</name>
+    <description>Add a native spinner to your cordova application</description>
+    <license>Apache 2.0</license>
+    <keywords>native, spinner, loader</keywords>
+
+    <platform name="android">
+      <source-file src="src/android/net/doismundos/cordova/NativeLoaderPlugin.java"
+        target-dir="src/net/doismundos/cordova/" />
+
+      <config-file target="config.xml" parent="/*">
+        <feature name="NativeLoaderPlugin">
+          <param name="android-package" value="net.doismundos.cordova.NativeLoaderPlugin"/>
+        </feature>
+      </config-file>
+      
+    </platform>
+
+    <platform name="ios">
+
+      <header-file src="src/ios/NativeLoaderPlugin.h" />
+      <source-file src="src/ios/NativeLoaderPlugin.m" />
+
+      <config-file target="config.xml" parent="/*/plugins">
+          <feature name="NativeLoaderPlugin">
+              <param name="ios-package" value="NativeLoaderPlugin"/>
+          </feature>
+      </config-file>
+    </platform>
+</plugin>
