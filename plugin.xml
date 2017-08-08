@@ -45,5 +45,18 @@
               <param name="ios-package" value="NativeLoaderPlugin"/>
           </feature>
       </config-file>
+      
+      <resource-file src="res/drawable/preloader1.png" target="Resources/preloader1.png" />
+      <resource-file src="res/drawable/preloader2.png" target="Resources/preloader2.png" />
+      <resource-file src="res/drawable/preloader3.png" target="Resources/preloader3.png" />
+      <resource-file src="res/drawable/preloader4.png" target="Resources/preloader4.png" />
+      <resource-file src="res/drawable/preloader5.png" target="Resources/preloader5.png" />
+      <resource-file src="res/drawable/preloader6.png" target="Resources/preloader6.png" />
+      <resource-file src="res/drawable/preloader7.png" target="Resources/preloader7.png" />
+      <resource-file src="res/drawable/preloader8.png" target="Resources/preloader8.png" />
+      <resource-file src="res/drawable/preloader9.png" target="Resources/preloader9.png" />
+      <resource-file src="res/drawable/preloader10.png" target="Resources/preloader10.png" />
+      <resource-file src="res/drawable/preloader11.png" target="Resources/preloader11.png" />
+      <resource-file src="res/drawable/preloader12.png" target="Resources/preloader12.png" />
     </platform>
 </plugin>
